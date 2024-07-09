@@ -17,8 +17,8 @@ Individuate gli elementi di cui avete bisogno per realizzare il programma.
     PSEUDO-CODICE
 -------------------->
 1.  Genera 5 numeri casuali univoci con una funzione creata e assegnali a "randomNumbers"
-    (tra parentesi numero numeri da generare 'i')
-    - `randomNumbers = generateRandomNumbers(5)`
+    (tra parentesi numero numeri da generare 'numbers')
+    - `randomNumbers = generateArrayNumbers(5)`
 2.  Visualizza "randomNumbers" in pagina
 3.  Avvia un timer di 30 secondi
     - `startTimer(30 secondi)`
