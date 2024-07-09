@@ -1,0 +1,25 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+main {
+    height: 100vh;
+    padding: 0px 20px 20px 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: aqua;
+}
+
+main h2 {
+    padding: 10px 0px;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+.container {
+    height: 100%;
+    width: 100%;
+    background-color: pink;
+}
