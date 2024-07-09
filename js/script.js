@@ -1,6 +1,13 @@
-let randomNumbers = generateArrayNumbers(5);
-console.log(randomNumbers);
+const play = document.getElementById("play");
 
+// Il gioco parte con l'evento click del bottone 'play'
+play.addEventListener("click", function () {
+    let randomNumbers = generateArrayNumbers(5);
+    console.log(randomNumbers);
+});
+
+
+// Funzione per generare un Array di numeri casuali
 function generateArrayNumbers(numbers) {
     let arrayNumbers = [];
     for (let i = 0; i < numbers; i++) {
@@ -9,3 +16,5 @@ function generateArrayNumbers(numbers) {
     }
     return arrayNumbers;
 }
+
+// Funzione per stampare i valori dentro un Array a schermo
