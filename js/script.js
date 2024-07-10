@@ -3,16 +3,20 @@ const play = document.getElementById("play");
 const container = document.getElementById('number-container');
 const height = container.offsetHeight; // Altezza Conteiner dove stamperò i Numeri
 const width = container.offsetWidth; // Larghezza Container dove stamperò i Numeri
+const range = 20; // Distanza alla quale devono stare i numeri
+// SERVE UN IF SE LO SCHERMO è PICCOLO ALTRIMENTI LOOP
 
 
 // Il gioco parte con l'evento click del bottone 'play'
 play.addEventListener("click", function () {
     totalNumber = selectDifficulty();
-    let randomNumbers = generateArrayNumbers(totalNumber);
-    let positionNumbers = generatePositionNumbers(totalNumber);
-    console.log(totalNumber);
+    let randomNumbers = generateArrayNumbers(totalNumber, 100, 1);
+    let positionNumbers = generateArrayNumbers(totalNumber, height, range);
+    positionNumbers += generateArrayNumbers(totalNumber, width, range);
     console.log(randomNumbers);
     console.log(positionNumbers);
+    console.log(width);
+    console.log(height);
     randomArrayPrint(randomNumbers, positionNumbers);
 });
 
@@ -31,39 +35,17 @@ function selectDifficulty() {
 }
 
 
-
-// SISTEMARE NUMBERS I NUMBER MAGARI CON RANDOMINDEX
-
 // Funzione per generare un Array di numeri casuali diversi tra loro
-function generateArrayNumbers(value) {
+function generateArrayNumbers(value, max, range) {
     let array = [];
     let i = 0
     while (i < value) {
-        let number = Math.floor(Math.random() * 100) + 1;
+        let number = Math.floor(Math.random() * (Math.floor(max / range) + 1)) * range;
         if (!array.includes(number)) {
             array.push(number);
             i++;
         }
     }
-    return array;
-}
-
-
-// Funzione per generare ...
-function generatePositionNumbers(value) {
-    let array = [];
-    let i = 0
-    // Primi 5 valori per Altezza
-    while (i < value) {
-        // Genera un numero da 0 a l'altezza del contenitore, con un range di 20
-        let number = Math.floor(Math.random() * (Math.floor(height / 20) + 1)) * 20;
-        if (!array.includes(number)) {
-            array.push(number);
-            i++;
-        }
-    }
-    // Ultimi 5 valori per Lunghezza
-    
     return array;
 }
 
