@@ -21,15 +21,23 @@ header button {
     padding: 5px 10px;
 }
 
-.container {
+main {
     height: calc(100vh - 50px);
-    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     background-color: pink;
+}
+
+.container {
+    width: 1200px;
+    height: 600px;
+    position: relative;
 }
 
 .number {
     position: absolute;
-    font-size: 25px;
+    font-size: 23px;
     color: white;
     background-color: red;
     padding: 10px;

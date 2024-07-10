@@ -1,23 +1,30 @@
 // Dichiarazione Elementi
 const play = document.getElementById("play");
 const container = document.getElementById('number-container');
+
+// Costanti per altezza container per calcolare la posizione random dei numeri all'interno
+// Range per distanziare tra di loro i numeri di 50px in modo da non sormontarsi
+// Min per distanziare un minimo gli elementi dal bordo del loro container (un "padding")
 const range = 50;
-const height = container.offsetHeight - range;
-const width = container.offsetWidth- range;
 const min = 20;
-// SERVE UN IF SE LO SCHERMO è PICCOLO ALTRIMENTI LOOP
+// Tolto (Range + Min) per far si che gli elementi non escano dal loro container e siano un minimo distanti dai bordi
+const height = container.offsetHeight - (range + min);
+const width = container.offsetWidth- (range + min);
 
 
 // Il gioco parte con l'evento click del bottone 'play'
 play.addEventListener("click", function () {
     totalNumber = selectDifficulty();
+    countdown();
     let randomNumbers = generateArrayNumbers(totalNumber, 100, 1, 1);
-    let positionNumbers = generateArrayNumbers(totalNumber, height, min, range).concat(generateArrayNumbers(totalNumber, width, min, range));
+    let verticalPositionNumbers = generateArrayNumbers(totalNumber, height, min, range);
+    let horizontalPositionNumbers = generateArrayNumbers(totalNumber, width, min, range);
     console.log(randomNumbers);
-    console.log(positionNumbers);
+    console.log(verticalPositionNumbers);
+    console.log(horizontalPositionNumbers);
     console.log(width);
     console.log(height);
-    randomArrayPrint(randomNumbers, positionNumbers);
+    randomArrayPrint(randomNumbers, verticalPositionNumbers, horizontalPositionNumbers);
 });
 
 
@@ -52,25 +59,46 @@ function generateArrayNumbers(value, max, min, range) {
 
 
 // Funzione per stampare i valori di un Array a schermo, in posizione random
-function randomArrayPrint(array, position) {
+// Con la responsività si rompe, ma per adesso va bene così
+function randomArrayPrint(array, yposition, xposition) {
     container.innerHTML = '';
     for (let i = 0; i < array.length; i++) {
         const number = document.createElement('div');
         number.classList.add('number');
         number.innerText = array[i];
-        number.style.bottom = `${position[i]}px`;
-        number.style.left = `${position[position.length - (i + 1)]}px`;
+        number.style.bottom = `${yposition[i]}px`;
+        number.style.left = `${xposition[i]}px`;
         numberPadding(number);
         container.appendChild(number);
         console.log(number);
     }
 }
 
+
+// Funzione per sistemare padding/dimensione numeri
 function numberPadding(number) {
     if (number.innerText < 10) {
         number.style.padding = '10px 18px';
     }
     else if (number.innerText == 100) {
-        number.style.padding = '18px 10px';
+        number.style.fontSize = '20px';
+        number.style.padding = '15px 10px';
     }
+}
+
+
+// Funcione per far partire un countdown di 30 secondi
+function countdown() {
+    let seconds = 30;
+    let time = document.getElementById('seconds');
+    let clock = setInterval(function () {
+        time.innerText = seconds;
+        if (seconds === 0) {
+            clearInterval(clock);
+            time.innerText = "Tempo scaduto!";
+        }
+        else {
+            seconds--;
+        }
+    }, 1000);
 }
