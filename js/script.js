@@ -25,6 +25,9 @@ play.addEventListener("click", function () {
     console.log(height);
     randomArrayPrint(randomNumbers, verticalPositionNumbers, horizontalPositionNumbers);
     startCountdown();
+    setTimeout(() => {
+        insertNumbers(totalNumber);
+    }, 6000);    
 });
 
 // Funzione per inserire quanti numeri da memorizzare
@@ -83,7 +86,7 @@ function numberPadding(number) {
 
 // Funzione per far partire un countdown di 30 secondi
 function startCountdown() {
-    let seconds = 30;
+    let seconds = 5;
     if (clock) {
         clearInterval(clock);
     }
@@ -97,4 +100,16 @@ function startCountdown() {
             time.innerText = `Countdown: ${seconds}`;
         }
     }, 1000);
+}
+
+
+// Funzione che chiede in input i numeri che si ricorda l'utente
+function insertNumbers(totalNumber) {
+    let userNumber = [];
+    alert("Inserisci uno alla volta i numeri che ti ricordi, se non ricordi, lascia il campo vuoto");
+    for (let i = 0; i < totalNumber; i++) {
+        let input = prompt(`Inserisci il numero ${i + 1}: `);
+        userNumber.push(input);
+    }
+    console.log(userNumber);
 }
