@@ -3,30 +3,29 @@ const play = document.getElementById("play");
 const container = document.getElementById('number-container');
 
 // Costanti per altezza container per calcolare la posizione random dei numeri all'interno
-// Range per distanziare tra di loro i numeri di 50px in modo da non sormontarsi
-// Min per distanziare un minimo gli elementi dal bordo del loro container (un "padding")
 const range = 50;
 const min = 20;
-// Tolto (Range + Min) per far si che gli elementi non escano dal loro container e siano un minimo distanti dai bordi
 const height = container.offsetHeight - (range + min);
-const width = container.offsetWidth- (range + min);
+const width = container.offsetWidth - (range + min);
 
+// Countdown
+let time = document.getElementById('seconds');
+let clock;
 
 // Il gioco parte con l'evento click del bottone 'play'
 play.addEventListener("click", function () {
-    totalNumber = selectDifficulty();
-    countdown();
-    let randomNumbers = generateArrayNumbers(totalNumber, 100, 1, 1);
-    let verticalPositionNumbers = generateArrayNumbers(totalNumber, height, min, range);
-    let horizontalPositionNumbers = generateArrayNumbers(totalNumber, width, min, range);
+    const totalNumber = selectDifficulty();
+    const randomNumbers = generateArrayNumbers(totalNumber, 100, 1, 1);
+    const verticalPositionNumbers = generateArrayNumbers(totalNumber, height, min, range);
+    const horizontalPositionNumbers = generateArrayNumbers(totalNumber, width, min, range);
     console.log(randomNumbers);
     console.log(verticalPositionNumbers);
     console.log(horizontalPositionNumbers);
     console.log(width);
     console.log(height);
     randomArrayPrint(randomNumbers, verticalPositionNumbers, horizontalPositionNumbers);
+    startCountdown();
 });
-
 
 // Funzione per inserire quanti numeri da memorizzare
 function selectDifficulty() {
@@ -41,14 +40,13 @@ function selectDifficulty() {
     return count;
 }
 
-
 // Funzione per generare un Array di numeri casuali diversi tra loro,
 // a cui passo un valore massimo, minimo, quanti valori voglio e un range.
 function generateArrayNumbers(value, max, min, range) {
-    let array = [];
+    const array = [];
     let i = 0;
     while (i < value) {
-        let number = Math.floor(Math.random() * (Math.floor((max - min) / range) + 1)) * range + min;
+        const number = Math.floor(Math.random() * (Math.floor((max - min) / range) + 1)) * range + min;
         if (!array.includes(number)) {
             array.push(number);
             i++;
@@ -56,7 +54,6 @@ function generateArrayNumbers(value, max, min, range) {
     }
     return array;
 }
-
 
 // Funzione per stampare i valori di un Array a schermo, in posizione random
 // Con la responsività si rompe, ma per adesso va bene così
@@ -74,31 +71,30 @@ function randomArrayPrint(array, yposition, xposition) {
     }
 }
 
-
 // Funzione per sistemare padding/dimensione numeri
 function numberPadding(number) {
     if (number.innerText < 10) {
         number.style.padding = '10px 18px';
-    }
-    else if (number.innerText == 100) {
+    } else if (number.innerText == 100) {
         number.style.fontSize = '20px';
         number.style.padding = '15px 10px';
     }
 }
 
-
-// Funcione per far partire un countdown di 30 secondi
-function countdown() {
+// Funzione per far partire un countdown di 30 secondi
+function startCountdown() {
     let seconds = 30;
-    let time = document.getElementById('seconds');
-    let clock = setInterval(function () {
-        time.innerText = seconds;
+    if (clock) {
+        clearInterval(clock);
+    }
+    time.innerText = `Countdown: ${seconds}`;
+    clock = setInterval(function () {
         if (seconds === 0) {
             clearInterval(clock);
             time.innerText = "Tempo scaduto!";
-        }
-        else {
+        } else {
             seconds--;
+            time.innerText = `Countdown: ${seconds}`;
         }
     }, 1000);
 }
