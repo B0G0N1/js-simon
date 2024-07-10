@@ -13,17 +13,20 @@ const width = container.offsetWidth - (range + min);
 // Variabili per Countdown
 const time = document.getElementById('seconds');
 let clock;
+let timeout;
 
 
 // Il gioco parte con l'evento click del bottone 'play'
 play.addEventListener("click", function () {
+    clearInterval(clock);
+    clearTimeout(timeout);
     let totalNumber = selectDifficulty();
     let randomNumbers = generateArrayNumbers(totalNumber, 100, 1, 1);
     const verticalPositionNumbers = generateArrayNumbers(totalNumber, height, min, range);
     const horizontalPositionNumbers = generateArrayNumbers(totalNumber, width, min, range);
     randomArrayPrint(randomNumbers, verticalPositionNumbers, horizontalPositionNumbers);
     startCountdown();
-    setTimeout(() => {
+    timeout = setTimeout(() => {
         let userNumbers = insertNumbers(totalNumber);
         checkNumbers(randomNumbers, userNumbers);
     }, 31000);
@@ -59,6 +62,7 @@ function generateArrayNumbers(value, max, min, range) {
 
 // Funzione per stampare i valori di un Array a schermo, in posizione random, con la responsività si rompe, ma mi accontento
 function randomArrayPrint(randomNumbers, verticalPositionNumbers, horizontalPositionNumbers) {
+    container.innerHTML = '';
     for (let i = 0; i < randomNumbers.length; i++) {
         const number = document.createElement('div');
         number.classList.add('number');
@@ -85,9 +89,6 @@ function numberPadding(number) {
 // Funzione per far partire un countdown di 30 secondi
 function startCountdown() {
     let seconds = 30;
-    if (clock) {
-        clearInterval(clock);
-    }
     time.innerText = `Countdown: ${seconds}`;
     clock = setInterval(function () {
         if (seconds === 1) {
